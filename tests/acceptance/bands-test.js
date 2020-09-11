@@ -2,7 +2,8 @@ import { module, test } from 'qunit';
 import { visit, click, fillIn, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { createBand, createSong, loginAs } from 'rarwe/tests/helpers/custom-helpers';
+import { createBand, loginAs } from 'rarwe/tests/helpers/custom-helpers';
+import { percySnapshot } from 'ember-percy/snapshot';
 
 module('Acceptance | Bands', function(hooks) {
   setupApplicationTest(hooks);
@@ -25,19 +26,12 @@ module('Acceptance | Bands', function(hooks) {
 	await loginAs('dave@tcv.com');
 	await visit('/');
 
+	percySnapshot('List of bands');
 	assert.dom('[data-test-rr=band-link]').exists({ count: 2 }, 'All band links are rendered');
 	assert.dom('[data-test-rr=band-list-item]:first-child').hasText("Radiohead", 'The first band link contains the band name');
 	assert.dom('[data-test-rr=band-list-item]:last-child').hasText("Long Distance Calling", 'The other band link contains the band name');
   });
 
-  test('Create a song', async function(assert) {
-	this.server.create('band', { name: 'Royal Blood'});
-	await loginAs('dave@tcv.com');
-	await visit('/bands/1');
-	await createSong('Little Monster');
-
-	assert.dom('[data-test-rr=song-list-item]:last-child').hasText('Little Monster', 'The new song link is rendered as the last item');
-  });
 
   test('Sort songs in various ways', async function(assert) {
 	let band = this.server.create('band', { name: 'Them Crooked Vultures' });

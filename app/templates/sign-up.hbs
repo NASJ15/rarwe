@@ -6,14 +6,14 @@
 				{{/each}}
 				<div class="rr-form-row-inline">
 						{{#if this.showErrors.email}}
-								<div class="rr-form-field-error data-test-rr="email-error>{{v-get this.model "email" "message"}}</div>
+								<div class="rr-form-field-error" data-test-rr="email-error">{{v-get this.model "email" "message"}}</div>
 						{{/if}}
 						<label for="email">Email</label>
 						<Input @type="email" @value={{this.model.email}} class="rr-input ml-auto" id="email" {{on "blur" (fn this.setShowErrors "email")}} {{on "input" this.resetBaseErrors}}/>
 				</div>
 				<div class="rr-form-row-inline">
 						{{#if this.showErrors.password}}
-								<div class="rr-form-field-error" data-test-rr="email-error">{{v-get this.model "password" "message"}}</div>
+								<div class="rr-form-field-error" data-test-rr="password-error">{{v-get this.model "password" "message"}}</div>
 						{{/if}}
 						<label for="password">Password</label>
 						<Input @type="password" @value={{this.model.password}} class="rr-input ml-auto" id="password" {{on "blur" (fn this.setShowErrors "password")}}  {{on "input" this.resetBaseErrors}}/>
